@@ -1,0 +1,80 @@
+{
+  "name": "native-icons",
+  "main": "./lib/main.js",
+  "version": "0.1.0",
+  "description": "Show native OS file icons in Pulsar",
+  "keywords": [
+    "icons",
+    "native"
+  ],
+  "repository": "https://github.com/asiloisad/pulsar-native-icons",
+  "license": "MIT",
+  "engines": {
+    "atom": ">=1.0.0 <2.0.0"
+  },
+  "providedServices": {
+    "file-icons.element-icons": {
+      "versions": {
+        "1.0.0": "provideElementIcons"
+      }
+    },
+    "atom.file-icons": {
+      "versions": {
+        "1.0.0": "provideFileIcons"
+      }
+    }
+  },
+  "configSchema": {
+    "mode": {
+      "type": "string",
+      "default": "support",
+      "enum": [
+        {
+          "value": "support",
+          "description": "Support - overlay alongside another icon package"
+        },
+        {
+          "value": "service",
+          "description": "Service - register services as the primary icon source"
+        }
+      ],
+      "title": "Mode",
+      "description": "Pick `support` when running alongside another icon package like `file-icons`: no services are registered and only listed files get a native icon, everything else keeps the icon assigned by the other package. Pick `service` when `native-icons` is your only icon source: registers `file-icons.element-icons` and `atom.file-icons` services so the tree-view, tabs, archive-view, and other consumers receive icons from this package. Restart needed.",
+      "order": 1
+    },
+    "greenlist": {
+      "type": "array",
+      "default": [],
+      "title": "Greenlist",
+      "description": "*Only support mode*. Apply native icons to filenames matching one of these CSS-compatible patterns. Service mode ignores this setting. Support mode requires a greenlist. Supported forms are `*.ext`, `*ext`, `name*`, `*sub*`, and `exact`, matched case-insensitively against `data-name`. Entries may contain comma-space separated patterns, e.g. `*.dat, *ipy`. Patterns containing `?` or `*` in the middle are ignored with a console warning.",
+      "items": {
+        "type": "string"
+      },
+      "order": 2
+    },
+    "blacklist": {
+      "type": "array",
+      "default": [],
+      "title": "Blacklist",
+      "description": "*Only support mode*. Never apply native icons to filenames matching one of these CSS-compatible patterns. Service mode ignores this setting. Same syntax and comma-space separated entries as greenlist. Blacklist always wins. Examples: `*.min.js`, `*.bak`, `*~`.",
+      "items": {
+        "type": "string"
+      },
+      "order": 3
+    },
+    "useCustomFileTypes": {
+      "type": "boolean",
+      "default": true,
+      "title": "Honour `core.customFileTypes`",
+      "description": "When a file matches a pattern under Pulsar's `core.customFileTypes` (e.g. `source.python: [\"ipy\"]`), show the icon of the grammar's primary file extension (`.py`) instead of the file's real extension. Useful for custom extensions that share a grammar.",
+      "order": 4
+    },
+    "useFullPathForExecutables": {
+      "type": "boolean",
+      "default": true,
+      "title": "Use real path for embedded-icon binaries",
+      "description": "For `.exe`, `.lnk`, `.ico`, `.dll`, `.url`, `.scr`, `.msi` files, query the actual file's icon (each binary carries its own). Turn off to use a generic icon per extension.",
+      "order": 5
+    }
+  }
+}
