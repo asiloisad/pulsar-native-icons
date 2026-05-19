@@ -1,7 +1,7 @@
 {
   "name": "native-icons",
   "main": "./lib/main.js",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Show native OS file icons in Pulsar",
   "keywords": [
     "icons",
