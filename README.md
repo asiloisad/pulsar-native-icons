@@ -23,15 +23,58 @@ Use `service` mode when `native-icons` is your primary icon package. It register
 
 ## Provided Service `file-icons.element-icons`
 
-Provided only in `service` mode.
+Provided only in `service` mode. Lets other packages iconize their own DOM elements.
 
-Lets other packages iconize their own DOM elements. Returns a `Disposable`.
+In your `package.json`:
+
+```json
+{
+  "consumedServices": {
+    "file-icons.element-icons": {
+      "versions": { "1.0.0": "consumeElementIcons" }
+    }
+  }
+}
+```
+
+In your main module:
+
+```javascript
+consumeElementIcons(addIconToElement) {
+  const disposable = addIconToElement(element, filePath);
+  // Later:
+  disposable.dispose();
+}
+```
+
+- `addIconToElement(element, filePath, options?)`: attaches a native icon to a DOM element for the given file path. Returns a `Disposable` that removes the icon when disposed.
 
 ## Provided Service `atom.file-icons`
 
-Provided only in `service` mode.
+Provided only in `service` mode. Provides synchronous icon class lookup by file path.
 
-Provides `iconClassForPath(path)` for synchronous icon class lookup.
+In your `package.json`:
+
+```json
+{
+  "consumedServices": {
+    "atom.file-icons": {
+      "versions": { "1.0.0": "consumeFileIcons" }
+    }
+  }
+}
+```
+
+In your main module:
+
+```javascript
+consumeFileIcons(service) {
+  const classes = service.iconClassForPath('/path/to/file.js');
+  element.classList.add(...[].concat(classes || []));
+}
+```
+
+- `iconClassForPath(filePath, context?)`: returns a CSS class name or array of class names for the given path, or `null` if no icon is available.
 
 ## Contributing
 
