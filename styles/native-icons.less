@@ -1,43 +1,10 @@
-// Suppress glyph fonts on elements we own. Per-extension `background-image`
-// rules are injected at runtime by lib/main.js.
-//
-// Spacing mirrors Pulsar core's `.icon::before` rule
-// (pulsar/static/atom-ui/styles/lists.less): a 16x16 inline-block with a 5px
-// right margin and `top: 1px` for optical alignment with the row text.
-
-.tree-view .native-icon::before,
-.tab-bar .native-icon::before {
-  display: inline-block !important;
-  width: 16px !important;
+.tree-view .native-icon::before, .tab-bar .native-icon::before {
+  display: inline-block;
   height: 16px !important;
-  line-height: 1 !important;
-  text-align: center;
-  position: relative;
-  vertical-align: middle;
-  top: 0;
-  margin-right: 5px;
-  background-size: contain !important;
-  background-repeat: no-repeat !important;
-  background-position: center !important;
-  // Kill whatever glyph (octicons / file-icons) the underlying rules tried to paint.
-  font-family: inherit !important;
-  font-size: 0 !important;
-  color: transparent !important;
-  content: "" !important;
-}
-
-// Tree-view rows have ~22px line-height; nudging the bitmap down a couple
-// pixels makes it sit on the same optical centerline as the text. Adjust if
-// it still looks off.
-.tree-view .native-icon::before {
-  // Push bitmap down so it sits on the row's text centerline. The 16x16
-  // PNGs Windows returns often have transparent padding at the bottom, so
-  // numerically this looks larger than feels intuitive.
-  vertical-align: text-bottom !important;
-  top: 4px;
-}
-
-// Tabs use a slightly larger title baseline; less correction needed there.
-.tab-bar .native-icon::before {
-  top: 2px;
+  width: 16px !important;
+  content: "";
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  vertical-align: middle !important;
 }
